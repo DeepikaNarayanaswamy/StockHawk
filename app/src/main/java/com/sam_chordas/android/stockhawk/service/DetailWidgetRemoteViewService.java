@@ -95,9 +95,6 @@ public class DetailWidgetRemoteViewService extends RemoteViewsService {
                 Log.v(LOG_TAG, "PRICE" + bidPrice);
                 views.setTextViewText(R.id.stock_symbol, symbolName);
                 views.setTextViewText(R.id.bid_price, bidPrice);
-                final Intent fillInIntent = new Intent();
-                fillInIntent.putExtra("data", position);
-                views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
 
                 return views;
             }
