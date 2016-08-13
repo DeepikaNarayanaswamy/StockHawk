@@ -45,7 +45,7 @@ public class StockHawkWidgetProvider extends AppWidgetProvider {
             // Create an Intent to launch MainActivity
             Intent intent = new Intent(context, MyStocksActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            views.setOnClickPendingIntent(R.id.widget   , pendingIntent);
+            views.setOnClickFillInIntent(R.id.widget_list_item,intent);
 
             // Set up the collection
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
