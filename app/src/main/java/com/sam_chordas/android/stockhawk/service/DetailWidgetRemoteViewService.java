@@ -36,12 +36,6 @@ public class DetailWidgetRemoteViewService extends RemoteViewsService {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
 
         return new RemoteViewsFactory() {
@@ -67,7 +61,7 @@ public class DetailWidgetRemoteViewService extends RemoteViewsService {
 
                 data = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI, QUOTE_COLUMNS, null, null, null,
                         null);
-                Log.v(LOG_TAG,"from query data="+data);
+                Log.v(LOG_TAG,"from query data cout="+data.getCount());
                 Binder.restoreCallingIdentity(identityToken);
             }
 
@@ -96,11 +90,14 @@ public class DetailWidgetRemoteViewService extends RemoteViewsService {
                 }
                 RemoteViews views = new RemoteViews(getPackageName(),
                         R.layout.widget_details_list_item);
-                String symbolName = data.getColumnName(INDEX_QUOTE_SYMBOL);
-                String bidPrice = data.getColumnName(INDEX_QUOTE_BIDPRICE);
-                Log.v(LOG_TAG,"PRICE"+bidPrice);
+                String symbolName = data.getString(INDEX_QUOTE_SYMBOL);
+                String bidPrice = data.getString(INDEX_QUOTE_BIDPRICE);
+                Log.v(LOG_TAG, "PRICE" + bidPrice);
                 views.setTextViewText(R.id.stock_symbol, symbolName);
                 views.setTextViewText(R.id.bid_price, bidPrice);
+                final Intent fillInIntent = new Intent();
+                fillInIntent.putExtra("data", position);
+                views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
 
                 return views;
             }
