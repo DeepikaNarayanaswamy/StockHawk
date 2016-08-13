@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الأسهم هوك</string>
+    <string name="action_change_units">وحدات التغيير</string>
+    <string name="action_example">العمل سبيل المثال</string>
+    <string name="action_settings">إعدادات</string>
+    <string name="content_test">بحث عن الأوراق المالية رمز</string>
+    <string name="network_toast">بالإنترنتاه اوه! هذا التطبيق يتطلب اتصال</string>
+    <string name="network_unavailable">لا يوجد اتصال بالشبكة</string>
+    <string name="symbol_search">رمز البحث</string>
+</resources>
