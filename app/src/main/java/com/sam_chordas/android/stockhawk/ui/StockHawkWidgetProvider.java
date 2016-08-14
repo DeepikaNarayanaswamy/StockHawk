@@ -43,9 +43,6 @@ public class StockHawkWidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stock_hawk_widget_layout);
 
             // Create an Intent to launch MainActivity
-            Intent intent = new Intent(context, MyStocksActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            views.setOnClickFillInIntent(R.id.widget_list_item,intent);
 
             // Set up the collection
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -66,14 +63,19 @@ public class StockHawkWidgetProvider extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 */
 
+            // This portion will trigger the detail activity for each list item clicked from  a widget.
+            boolean useDetailActivity = true;
+            Intent clickIntentTemplate = useDetailActivity
+                    ? new Intent(context, StockDetailActivity.class)
+                    : new Intent(context, MyStocksActivity.class);
 
-/*
-            Intent clickIntentTemplate = new Intent(context, MyStocksActivity.class);
+
+           // Intent clickIntentTemplate = new Intent(context, MyStocksActivity.class);
             PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
                     .addNextIntentWithParentStack(clickIntentTemplate)
                     .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setPendingIntentTemplate(R.id.widget_list, clickPendingIntentTemplate);
-*/
+
 
             Log.v(LOG_TAG,"updating widget");
             // Tell the AppWidgetManager to perform an update on the current app widget
