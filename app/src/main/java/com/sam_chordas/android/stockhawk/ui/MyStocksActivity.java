@@ -95,6 +95,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 mCursor.moveToPosition(position);
                 String symbol = mCursor.getString(mCursor.getColumnIndex(QuoteColumns.SYMBOL));
                 Intent launchDetailActivity = new Intent(mContext,StockDetailActivity.class).putExtra("STOCKNAME",symbol);
+
+                  //Intent launchDetailActivity = StockDetailActivity.getStartActivityIntent(MyStocksActivity.this, (String) v.getTag());
                 startActivity(launchDetailActivity);
 
               }

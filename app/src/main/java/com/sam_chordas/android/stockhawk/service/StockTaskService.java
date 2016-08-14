@@ -48,7 +48,7 @@ public class StockTaskService extends GcmTaskService{
     Request request = new Request.Builder()
         .url(url)
         .build();
-
+    Log.v("Task service",url);
     Response response = client.newCall(request).execute();
     return response.body().string();
   }
