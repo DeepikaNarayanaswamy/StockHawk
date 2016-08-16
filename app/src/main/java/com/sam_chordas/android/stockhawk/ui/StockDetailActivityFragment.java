@@ -19,6 +19,8 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.data.StockHawkConstants;
+import com.sam_chordas.android.stockhawk.rest.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +32,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -125,9 +129,6 @@ public class StockDetailActivityFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
                 results = new JSONObject(forecastJsonStr);
-
-
-
             } catch (JSONException ex){
                 ex.printStackTrace();
             }
@@ -164,8 +165,8 @@ public class StockDetailActivityFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-           LineData data = new LineData();
-            data.addDataSet(getDataSet());
+            LineData data = new LineData();
+            data.addDataSet(Utils.getDataSet(results));
             chart.setDescription("Stock price over time");
             chart.setData(data);
             setXAxis(chart);
@@ -185,55 +186,7 @@ public class StockDetailActivityFragment extends Fragment {
             chart.invalidate();
         }
     }
-    private ILineDataSet getDataSet() {
-        JSONArray quoteArray = null;
-        ILineDataSet lineDataSet1 = null;
-        try {
-            JSONObject query1 = (JSONObject) results.get("query");
-            JSONObject RESULTS = query1.getJSONObject("results");
-            quoteArray = RESULTS.getJSONArray("quote");
 
-
-        ArrayList<ILineDataSet> dataSets = null;
-        ArrayList<Entry> valueSet1 = new ArrayList<>();
-        for (int i=0;i<quoteArray.length();i++){
-
-            JSONObject quoteValue = quoteArray.getJSONObject(i);
-            String date = null;
-             date = (String)quoteValue.get("Date");
-            String value = (String)quoteValue.get("Adj_Close");
-            SimpleDateFormat formattedDate = new SimpleDateFormat(date);
-            Entry v1e1 = new Entry(i,Float.parseFloat(value));
-                    valueSet1.add(v1e1);
-        }
-
-
-          lineDataSet1 = new LineDataSet(valueSet1, "Brand 1");
-        int[] colors  = new int[] {Color.RED  ,Color.RED, Color.BLUE ,Color.GREEN, Color.GRAY, Color.RED};
-
-        }catch(JSONException ex){
-            ex.printStackTrace();
-        }
-
-        return lineDataSet1;
-    }
-
-    private ArrayList<String> getXAxisValues() {
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("JAN");
-        xAxis.add("FEB");
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAY");
-        xAxis.add("JUN");
-        xAxis.add("JUL");
-        xAxis.add("AUG");
-        xAxis.add("SEPT");
-        xAxis.add("OCT");
-        xAxis.add("NOV");
-        xAxis.add("DEC");
-        return xAxis;
-    }
 
     private void setXAxis(LineChart chart){
         XAxis xAxis = chart.getXAxis();

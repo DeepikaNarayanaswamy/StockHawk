@@ -71,12 +71,12 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     if (savedInstanceState == null){
       // Run the initialize task service so that some stocks appear upon an empty database
       mServiceIntent.putExtra("tag", "init");
-     // TextView networkUnavailable = (TextView)findViewById(R.id.network_unavailable);
+      TextView networkUnavailable = (TextView)findViewById(R.id.network_unavailable);
       if (isConnected){
         startService(mServiceIntent);
-       // networkUnavailable.setVisibility(View.GONE);
+        networkUnavailable.setVisibility(View.GONE);
       } else{
-        //networkUnavailable.setVisibility(View.VISIBLE);
+      networkUnavailable.setVisibility(View.VISIBLE);
         networkToast();
 
       }

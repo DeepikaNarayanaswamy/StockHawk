@@ -1,11 +1,17 @@
 package com.sam_chordas.android.stockhawk.rest;
 
 import android.content.ContentProviderOperation;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
+import com.sam_chordas.android.stockhawk.data.StockHawkConstants;
+
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,7 +96,7 @@ public class Utils {
 
   public static ContentProviderOperation buildBatchOperation(JSONObject jsonObject){
     ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(
-        QuoteProvider.Quotes.CONTENT_URI);
+            QuoteProvider.Quotes.CONTENT_URI);
     try {
 
         Log.v("buildBatchoperation",jsonObject.toString());
@@ -112,6 +118,47 @@ public class Utils {
     }
     return builder.build();
   }
+
+  public static ILineDataSet getDataSet(JSONObject results) {
+    JSONArray quoteArray = null;
+    ILineDataSet lineDataSet1 = null;
+    try {
+
+      if (results != null) {
+        JSONObject query1 = (JSONObject) results.get(StockHawkConstants.JSON_OBJECT_QUERY);
+        JSONObject RESULTS = query1.getJSONObject(StockHawkConstants.JSON_OBJECT_RESULTS);
+        quoteArray = RESULTS.getJSONArray(StockHawkConstants.JSON_OBJECT_QUOTE);
+
+
+        ArrayList<ILineDataSet> dataSets = null;
+        ArrayList<Entry> valueSet1 = new ArrayList<>();
+        for (int i = 0; i < quoteArray.length(); i++) {
+
+          JSONObject quoteValue = quoteArray.getJSONObject(i);
+          float datef = 0;
+          String date = (String) quoteValue.get(StockHawkConstants.JSON_OBJECT_DATE);
+          String value = (String) quoteValue.get(StockHawkConstants.JSON_OBJECT_ADJ_CLOSE);
+          String [] dateArray = new String[3] ;
+          if (date!= null && date != "" ){
+            dateArray = date.split("-");
+            datef = Float.parseFloat(dateArray[2]);
+          }
+          // Here we show the date and the stock value
+          Entry v1e1 = new Entry(i,Float.parseFloat(value));
+          valueSet1.add(v1e1);
+        }
+
+
+        lineDataSet1 = new LineDataSet(valueSet1, "Brand 1");
+        int[] colors = new int[]{Color.RED, Color.RED, Color.BLUE, Color.GREEN, Color.GRAY, Color.RED};
+      }
+    }catch(JSONException ex){
+      ex.printStackTrace();
+    }
+    Log.v(LOG_TAG,"Size of linedat"+lineDataSet1.getEntryCount());
+    return lineDataSet1;
+  }
+
 
 
 }

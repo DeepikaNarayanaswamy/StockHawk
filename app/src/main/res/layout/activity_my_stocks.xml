@@ -26,6 +26,9 @@
       fab:layout_anchor="recycler_view"
       fab:layout_anchorGravity="bottom | end"
       />
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/network_unavailable"/>
 
 </FrameLayout>
