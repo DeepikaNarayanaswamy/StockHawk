@@ -155,7 +155,7 @@ public class Utils {
     }catch(JSONException ex){
       ex.printStackTrace();
     }
-    //Log.v(LOG_TAG,"Size of linedat"+lineDataSet1.getEntryCount());
+
     return lineDataSet1;
   }
 
