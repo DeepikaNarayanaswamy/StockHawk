@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
+import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.rest.Utils;
@@ -135,7 +136,7 @@ public class StockTaskService extends GcmTaskService{
             handler.post(new Runnable() {
               @Override
               public void run() {
-                Toast.makeText(mContext.getApplicationContext(), "Sorry stock symbol is not available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext.getApplicationContext(), R.string.stock_unavailable, Toast.LENGTH_SHORT).show();
               }
             });
           }
