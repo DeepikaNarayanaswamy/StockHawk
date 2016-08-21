@@ -26,7 +26,7 @@
         android:gravity="center"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="?android:textAppearanceLarge"
-        android:text="No data available :("/>
+        android:text="@string/no_data"/>
 </LinearLayout>
 
     </LinearLayout>
